@@ -18,10 +18,10 @@ int main()
         return 1;
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 1);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
-    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow* window = glfwCreateWindow(512, 512, "Mainwindow", NULL, NULL);
 
@@ -40,12 +40,12 @@ int main()
 
 
     while (!glfwWindowShouldClose(window)) {
-        glClearColor(1.0, 0.2, 0.3, 1.0);
+        glClearColor(1.0, 1.0, 1.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT);
 
         glBegin(GL_TRIANGLES);
 
-        glVertex2f(-0.3, 0.7); glColor3f(0.4, 1.0, 0.4);
+        glVertex2f(-0.3, 0.7); glColor3f(0.3, 1.0, 1.0);
         glVertex2f(0.4, -0.3);
         glVertex2f(-0.3, -0.3);
 
