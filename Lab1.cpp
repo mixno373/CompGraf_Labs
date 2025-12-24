@@ -19,7 +19,7 @@ const char* vert_shader =
 
 const char* frag_shader =
     "#version 410 core\n"
-    "out vec4 frag_colour;"
+    "out vec4 frag_colour;\n"
     "uniform vec4 ourColor;\n"
     "void main() {"
     "frag_colour = ourColor;"
@@ -59,6 +59,8 @@ int main()
         return 1;
     }
 
+    printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
+
     GLuint VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -69,7 +71,7 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -97,11 +99,12 @@ int main()
 
         float timeValue = glfwGetTime();
         float r = (cos(timeValue) + 1.0f) / 2.0f;
+        float g = (sin(timeValue) + cos(timeValue)) / 2.0f;
         GLint vertexColorLocation = glGetUniformLocation(shader_program, "ourColor");
-        glUniform4f(vertexColorLocation, r, 1.0, 1.0f, 1.0f);
+        glUniform4f(vertexColorLocation, r, g, 1.0f, 1.0f);
 
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
