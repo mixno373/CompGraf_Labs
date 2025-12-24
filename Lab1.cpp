@@ -20,8 +20,9 @@ const char* vert_shader =
 const char* frag_shader =
     "#version 410 core\n"
     "out vec4 frag_colour;"
+    "uniform vec4 ourColor;\n"
     "void main() {"
-    "frag_colour = vec4(0.3, 1.0, 1.0, 1.0);"
+    "frag_colour = ourColor;"
     "}";
 
 float points[] = { -0.3f,  0.7f, 0.0f,
@@ -94,12 +95,15 @@ int main()
         glUseProgram(shader_program);
         //glDrawArrays(GL_TRIANGLES, 0, 3);
 
+        float timeValue = glfwGetTime();
+        float r = (cos(timeValue) + 1.0f) / 2.0f;
+        GLint vertexColorLocation = glGetUniformLocation(shader_program, "ourColor");
+        glUniform4f(vertexColorLocation, r, 1.0, 1.0f, 1.0f);
+
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        glEnd();
         glfwSwapBuffers(window);
-
         glfwPollEvents();
     }
 
