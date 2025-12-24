@@ -70,7 +70,7 @@ int main()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -89,27 +89,21 @@ int main()
     glLinkProgram(shader_program);
 
     while (!glfwWindowShouldClose(window)) {
-        glUseProgram(shader_program);
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-        /*glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        glUseProgram(shader_program);
+        //glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        glBegin(GL_TRIANGLES);
-
-        glVertex2f(-0.3, 0.7); glColor3f(0.3f, 1.0f, 1.0f);
-        glVertex2f(0.4, -0.3);
-        glVertex2f(-0.3, -0.3);*/
+        glBindVertexArray(VAO);
+        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
         glEnd();
         glfwSwapBuffers(window);
 
         glfwPollEvents();
-        //glfwTerminate();
     }
 
+    glfwTerminate();
 
     return 0;
 }
