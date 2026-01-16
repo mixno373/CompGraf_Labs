@@ -9,21 +9,8 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
+#include "GrafShaders.h"
 
-const char* vert_shader =
-    "#version 410 core\n"
-    "layout (location=0) in vec3 vp;"
-    "void main() {"
-    "gl_Position = vec4(vp, 1.0);"
-    "}";
-
-const char* frag_shader =
-    "#version 410 core\n"
-    "out vec4 frag_colour;\n"
-    "uniform vec4 ourColor;\n"
-    "void main() {"
-    "frag_colour = ourColor;"
-    "}";
 
 float points[] = { -0.3f,  0.7f, 0.0f,
                     0.4f, -0.3f, 0.0f,
@@ -79,29 +66,21 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vert_shader, NULL);
-    glCompileShader(vs);
-    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &frag_shader, NULL);
-    glCompileShader(fs);
-
-    GLuint shader_program = glCreateProgram();
-    glAttachShader(shader_program, fs);
-    glAttachShader(shader_program, vs);
-    glLinkProgram(shader_program);
+    Shader* shader = new Shader();
+    if (shader->load("vert_shader.glsl", "frag_shader.glsl") == 0) {
+        return 1;
+    }
 
     while (!glfwWindowShouldClose(window)) {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        glUseProgram(shader_program);
+        shader->use();
         //glDrawArrays(GL_TRIANGLES, 0, 3);
 
         float timeValue = glfwGetTime();
         float r = (cos(timeValue) + 1.0f) / 2.0f;
         float g = (sin(timeValue) + cos(timeValue)) / 2.0f;
-        GLint vertexColorLocation = glGetUniformLocation(shader_program, "ourColor");
-        glUniform4f(vertexColorLocation, r, g, 1.0f, 1.0f);
+        shader->glUniform("ourColor", r, g, 1.0, 1.0);
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
