@@ -17,7 +17,7 @@ Shader::Shader() {
 std::string Shader::readShFile(const char* path) {
 	std::ifstream file(path, std::ios::in);
 	if (!file.is_open()) {
-		std::cerr << "ќшибка открыти€ файла шейдера: " << path << std::endl;
+		fprintf(stderr, "ќшибка открыти€ файла шейдера: %s\n", path);
 		return "";
 	}
 
@@ -43,7 +43,7 @@ int Shader::load(const char* vert_sh_path, const char* frag_sh_path) {
 	glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		glGetShaderInfoLog(vs, 1024, NULL, infoLog);
-		std::cerr << "ќшибка компил€ции вершинного шейдера:\n" << infoLog << std::endl;
+		fprintf(stderr, "ќшибка компил€ции вершинного шейдера: %s\n", infoLog);
 		return 0;
 	}
 
@@ -55,7 +55,7 @@ int Shader::load(const char* vert_sh_path, const char* frag_sh_path) {
 	glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		glGetShaderInfoLog(fs, 1024, NULL, infoLog);
-		std::cerr << "ќшибка компил€ции фрагментного шейдера:\n" << infoLog << std::endl;
+		fprintf(stderr, "ќшибка компил€ции фрагментного шейдера: %s\n", infoLog);
 		glDeleteShader(vs);
 		return 0;
 	}
