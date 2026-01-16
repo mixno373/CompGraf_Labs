@@ -77,10 +77,16 @@ int main()
         shader->use();
         //glDrawArrays(GL_TRIANGLES, 0, 3);
 
+        // float timeValue = glfwGetTime();
+        // float r = (cos(timeValue) + 1.0f) / 2.0f;
+        // float g = (sin(timeValue) + cos(timeValue)) / 2.0f;
+        // shader->glUniform("ourColor", r, g, 1.0f, 1.0f);
+
+        // Другой вариант использования
         float timeValue = glfwGetTime();
-        float r = (cos(timeValue) + 1.0f) / 2.0f;
-        float g = (sin(timeValue) + cos(timeValue)) / 2.0f;
-        shader->glUniform("ourColor", r, g, 1.0, 1.0);
+        int r = 255*cos(timeValue);
+        int g = 127*sin(timeValue) + 127*cos(timeValue);
+        shader->glUniform("ourColor", r, g, 255, 1.0f);
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
