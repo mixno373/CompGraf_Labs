@@ -4,5 +4,9 @@
 https://github.com/mixno373/CompGraf_Labs/tree/Lab1
   
   
-*Лабораторная работа №2 (в разработке)*  
+*Лабораторная работа №2*  
 https://github.com/mixno373/CompGraf_Labs/tree/Lab2
+  
+  
+*Лабораторная работа №3*  
+https://github.com/mixno373/CompGraf_Labs/tree/Lab3
