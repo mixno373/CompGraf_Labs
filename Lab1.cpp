@@ -9,6 +9,10 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
 #include "GrafShaders.h"
 
 
@@ -17,6 +21,19 @@ float points[] = { -0.3f,  0.7f, 0.0f,
                    -0.3f, -0.3f, 0.0f
 };
 GLuint indices[] = {0, 1, 2};
+
+const uint16_t SCREEN_W = 512;
+const uint16_t SCREEN_H = 512;
+
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+
+const float cameraSpeed = 0.05f;
 
 
 int main()
@@ -31,7 +48,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(512, 512, "Mainwindow", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCREEN_W, SCREEN_H, "Mainwindow", NULL, NULL);
 
     if (!window) {
         glfwTerminate();
@@ -71,10 +88,43 @@ int main()
         return 1;
     }
 
+
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+
     while (!glfwWindowShouldClose(window)) {
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+            cameraPos += cameraSpeed * cameraFront;
+        }
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+            cameraPos -= cameraSpeed * cameraFront;
+        }
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+            cameraPos += cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+        }
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+            cameraPos -= cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+        }
+
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         shader->use();
+
+        glm::mat4 projection = glm::perspective(
+            glm::radians(45.0f),
+            (float)SCREEN_W / (float)SCREEN_H,
+            0.1f,
+            100.0f
+        );
+
+        glm::mat4 view_m = glm::lookAt(
+            cameraPos,
+            cameraTarget,
+            cameraUp
+        );
+
         //glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // float timeValue = glfwGetTime();
