@@ -9,6 +9,10 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
+#include "glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
 #include "GrafShaders.h"
 
 
@@ -18,6 +22,26 @@ float points[] = { -0.3f,  0.7f, 0.0f,
 };
 GLuint indices[] = {0, 1, 2};
 
+const unsigned int SCR_WIDTH = 512;
+const unsigned int SCR_HEIGHT = 512;
+
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+float lastX = SCR_WIDTH / 2.0f;
+float lastY = SCR_HEIGHT / 2.0f;
+float yaw = -90.0f;
+float pitch = 0.0f;
+bool firstMouse = true;
+float sensitivity = 0.1f;
+
+float delta_time = 0.0f;
+float last_frame = 0.0f;
+
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+}
 
 int main()
 {
@@ -31,13 +55,15 @@ int main()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(512, 512, "Mainwindow", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Mainwindow", NULL, NULL);
 
     if (!window) {
         glfwTerminate();
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glewExperimental = GL_TRUE;
 
     GLenum ret = glewInit();
@@ -71,9 +97,11 @@ int main()
         return 1;
     }
 
+    glEnable(GL_DEPTH_TEST);
+
     while (!glfwWindowShouldClose(window)) {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader->use();
         //glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -82,11 +110,30 @@ int main()
         // float g = (sin(timeValue) + cos(timeValue)) / 2.0f;
         // shader->glUniform("ourColor", r, g, 1.0f, 1.0f);
 
-        // Другой вариант использования
-        float timeValue = glfwGetTime();
-        int r = 255*cos(timeValue);
-        int g = 127*sin(timeValue) + 127*cos(timeValue);
-        shader->glUniform("ourColor", r, g, 255, 1.0f);
+        float currentFrame = static_cast<float>(glfwGetTime());
+        delta_time = currentFrame - last_frame;
+        last_frame = currentFrame;
+
+
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model, currentFrame * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+
+        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
+        glm::mat4 projection = glm::perspective(
+            glm::radians(45.0f),
+            (float)SCR_WIDTH / (float)SCR_HEIGHT,
+            0.1f,
+            100.0f
+        );
+
+        unsigned int modelLoc = glGetUniformLocation(shader->shaderProgram, "model");
+        unsigned int viewLoc = glGetUniformLocation(shader->shaderProgram, "view");
+        unsigned int projectionLoc = glGetUniformLocation(shader->shaderProgram, "projection");
+
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
