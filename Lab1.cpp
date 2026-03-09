@@ -169,8 +169,6 @@ int main()
 
         ourModel.Draw(*shader);
 
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
