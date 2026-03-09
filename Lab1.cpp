@@ -18,11 +18,6 @@
 #include "Model.h"
 
 
-float points[] = { -0.3f,  0.7f, 0.0f,
-                    0.4f, -0.3f, 0.0f,
-                   -0.3f, -0.3f, 0.0f
-};
-GLuint indices[] = {0, 1, 2};
 
 const unsigned int SCR_WIDTH = 512;
 const unsigned int SCR_HEIGHT = 512;
@@ -128,24 +123,6 @@ int main()
 
     printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
 
-    GLuint VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
     Shader* shader = new Shader();
     if (shader->load("vert_shader.glsl", "frag_shader.glsl") == 0) {
         return 1;
@@ -192,13 +169,13 @@ int main()
 
         ourModel.Draw(*shader);
 
-        glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
+    glDeleteProgram(shader->shaderProgram);
     glfwTerminate();
 
     return 0;
