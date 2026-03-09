@@ -37,6 +37,10 @@ float sensitivity = 0.1f;
 float delta_time = 0.0f;
 float last_frame = 0.0f;
 
+float move_head_v = 0.0f;
+float move_head_h = 0.0f;
+float rotate_shpind = 0.0f;
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -89,6 +93,56 @@ void processInput(GLFWwindow* window)
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+
+    float moveSpeed = delta_time * 2.0f;
+    float rotSpeed = delta_time * 250.0f;
+
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+        float newMove = move_head_v + moveSpeed;
+        if (newMove <= 0.51f) {
+            move_head_v = newMove;
+        }
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+        float newMove = move_head_v - moveSpeed;
+        if (newMove >= -1.67f) {
+            move_head_v = newMove;
+        }
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+        float newMove = move_head_h + moveSpeed;
+        if (newMove <= 1.4f) {
+            move_head_h = newMove;
+        }
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+        float newMove = move_head_h - moveSpeed;
+        if (newMove >= -1.4f) {
+            move_head_h = newMove;
+        }
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+        float newRot = rotate_shpind + rotSpeed;
+
+        if (newRot <= 360.0f) {
+            rotate_shpind = newRot;
+        }
+        else {
+            rotate_shpind = -360.0f;
+        }
+    }
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+        float newRot = rotate_shpind - rotSpeed;
+
+        if (newRot >= -360.0f) {
+            rotate_shpind = newRot;
+        }
+        else {
+            rotate_shpind = 360.0f;
+        }
+    }
 }
 
 int main()
@@ -103,7 +157,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Mainwindow", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "4PU 900VH", NULL, NULL);
 
     if (!window) {
         glfwTerminate();
@@ -150,7 +204,7 @@ int main()
 
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+        //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 
         glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
@@ -181,7 +235,24 @@ int main()
         glUniform3f(glGetUniformLocation(shader->shaderProgram, "light.diffuse"), 0.5f, 0.5f, 0.5f);
         glUniform3f(glGetUniformLocation(shader->shaderProgram, "light.specular"), 1.0f, 1.0f, 1.0f);
 
-        ourModel.Draw(*shader);
+        glm::mat4 modelMatrices[4];
+
+        modelMatrices[0] = glm::mat4(1.0f);
+
+        modelMatrices[1] = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, move_head_v, 0.0f));
+
+        modelMatrices[2] = glm::translate(modelMatrices[1], glm::vec3(move_head_h, 0.0f, 0.0f));
+
+        glm::vec3 pivot(-0.0834995f, 1.961549f, 0.2648f);
+        glm::mat4 spindle = glm::mat4(1.0f);
+        spindle = glm::translate(spindle, glm::vec3(0.0f, move_head_v, 0.0f));
+        spindle = glm::translate(spindle, glm::vec3(move_head_h, 0.0f, 0.0f));
+        spindle = glm::translate(spindle, pivot);
+        spindle = glm::rotate(spindle, glm::radians(rotate_shpind), glm::vec3(0.0f, 1.0f, 0.0f));
+        spindle = glm::translate(spindle, -pivot);
+        modelMatrices[3] = spindle;
+
+        ourModel.Draw(*shader, modelMatrices);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
