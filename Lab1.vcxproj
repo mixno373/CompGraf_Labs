@@ -76,13 +76,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include\glm;$(SolutionDir)glad\include;$(SolutionDir)glew-2.1.0\glew-2.1.0\include;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include\glm;$(SolutionDir)assimp\build\include;$(SolutionDir)assimp\include;$(SolutionDir)glad\include;$(SolutionDir)glew-2.1.0\glew-2.1.0\include;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)assimp;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference />
   </ItemDefinitionGroup>
@@ -94,13 +94,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include\glm;$(SolutionDir)glad\include;$(SolutionDir)glew-2.1.0\glew-2.1.0\include;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include\glm;$(SolutionDir)assimp\build\include;$(SolutionDir)assimp\include;$(SolutionDir)glad\include;$(SolutionDir)glew-2.1.0\glew-2.1.0\include;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)assimp;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference />
   </ItemDefinitionGroup>
@@ -110,13 +110,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include\glm;$(SolutionDir)glad\include;$(SolutionDir)glew-2.1.0\glew-2.1.0\include;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include\glm;$(SolutionDir)assimp\build\include;$(SolutionDir)assimp\include;$(SolutionDir)glad\include;$(SolutionDir)glew-2.1.0\glew-2.1.0\include;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)assimp;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference />
   </ItemDefinitionGroup>
@@ -128,13 +128,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include\glm;$(SolutionDir)glad\include;$(SolutionDir)glew-2.1.0\glew-2.1.0\include;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include\glm;$(SolutionDir)assimp\build\include;$(SolutionDir)assimp\include;$(SolutionDir)glad\include;$(SolutionDir)glew-2.1.0\glew-2.1.0\include;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)assimp;$(SolutionDir)glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference />
   </ItemDefinitionGroup>
@@ -144,6 +144,8 @@
     <ClCompile Include="Lab1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="GrafShaders.h" />
   </ItemGroup>

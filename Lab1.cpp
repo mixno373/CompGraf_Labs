@@ -15,6 +15,8 @@
 
 #include "GrafShaders.h"
 
+#include "Model.h"
+
 
 float points[] = { -0.3f,  0.7f, 0.0f,
                     0.4f, -0.3f, 0.0f,
@@ -151,16 +153,12 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
+    Model ourModel("Cube.obj");
+
     while (!glfwWindowShouldClose(window)) {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader->use();
-        //glDrawArrays(GL_TRIANGLES, 0, 3);
-
-        // float timeValue = glfwGetTime();
-        // float r = (cos(timeValue) + 1.0f) / 2.0f;
-        // float g = (sin(timeValue) + cos(timeValue)) / 2.0f;
-        // shader->glUniform("ourColor", r, g, 1.0f, 1.0f);
 
         float currentFrame = static_cast<float>(glfwGetTime());
         delta_time = currentFrame - last_frame;
@@ -189,6 +187,10 @@ int main()
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
+
+        glUniform3f(glGetUniformLocation(shader->shaderProgram, "lightColor"), 0.3f, 1.0f, 1.0f);
+
+        ourModel.Draw(*shader);
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
