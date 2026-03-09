@@ -153,7 +153,7 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
-    Model ourModel("Cube.obj");
+    Model ourModel("4PU.obj");
 
     while (!glfwWindowShouldClose(window)) {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
