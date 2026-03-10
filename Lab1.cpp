@@ -110,15 +110,15 @@ void processInput(GLFWwindow* window)
         }
     }
 
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
         float newMove = move_head_h + moveSpeed;
-        if (newMove <= 1.4f) {
+        if (newMove <= 0.37f) {
             move_head_h = newMove;
         }
     }
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
         float newMove = move_head_h - moveSpeed;
-        if (newMove >= -1.4f) {
+        if (newMove >= -1.6f) {
             move_head_h = newMove;
         }
     }
@@ -239,14 +239,13 @@ int main()
 
         modelMatrices[0] = glm::mat4(1.0f);
 
-        modelMatrices[1] = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, move_head_v, 0.0f));
+        modelMatrices[1] = glm::mat4(1.0f);
 
-        modelMatrices[2] = glm::translate(modelMatrices[1], glm::vec3(move_head_h, 0.0f, 0.0f));
+        modelMatrices[2] = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, move_head_v, 0.0f));
 
         glm::vec3 pivot(-0.0834995f, 1.961549f, 0.2648f);
-        glm::mat4 spindle = glm::mat4(1.0f);
-        spindle = glm::translate(spindle, glm::vec3(0.0f, move_head_v, 0.0f));
-        spindle = glm::translate(spindle, glm::vec3(move_head_h, 0.0f, 0.0f));
+        glm::mat4 spindle = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, move_head_v, 0.0f));
+        spindle = glm::translate(spindle, glm::vec3(0.0f, 0.0f, move_head_h));
         spindle = glm::translate(spindle, pivot);
         spindle = glm::rotate(spindle, glm::radians(rotate_shpind), glm::vec3(0.0f, 1.0f, 0.0f));
         spindle = glm::translate(spindle, -pivot);
