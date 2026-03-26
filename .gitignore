@@ -1,18 +1,1 @@
-# Visual Studio cache and user files
-.vs/
-**/.vs/
-*.user
-*.suo
-*.VC.db
-*.ipch
-
-# Build artifacts (safe)
-*.pdb
-*.ilk
-*.log
-*.tlog
-*.idb
-*.exe
-
-
-!4PU.obj
+﻿/.vs/Lab1
